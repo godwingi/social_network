@@ -13,7 +13,7 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
-    thought: [
+    thoughts: [
       {
         type: Schema.Types.ObjectId,
         ref: "Thought",
@@ -24,7 +24,7 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "User",
       },
-    ], //refences the USer model (self reference)
+    ], //refences the User model (self reference)
   },
   {
     toJSON: {

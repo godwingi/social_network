@@ -1,7 +1,9 @@
-const { Reaction } = require("../models");
+// const { Reaction } = require("../models");
+const { Thought } = require("../models");
 
 module.exports = {
   createReaction(req, res) {
+    console.log(req.params)
    Thought.findOneAndUpdate(
           { _id: req.params.thoughtId },
           { $addToSet: { reactions: req.body } },
@@ -13,7 +15,7 @@ module.exports = {
               .status(404)
               .json({ message: "Reaction created, but no thought with this ID" })
           : res.json({ message: "Reaction created" })
-      )
+          )
       .catch((err) => {
         console.error(err);
       });
