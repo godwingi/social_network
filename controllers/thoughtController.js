@@ -5,11 +5,13 @@ const reactionSchema = require("../models/Reaction");
 module.exports = {
   getThoughts(req, res) {
     Thought.find()
+      .select("-__v")
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "Thought not found" })
@@ -23,7 +25,7 @@ module.exports = {
       .then((thought) => {
         return User.findOneAndUpdate(
           { _id: req.body.userId },
-          { $push: { thought: thought._id } },
+          { $push: { thoughts: thought._id } },
           { new: true }
         );
       })
@@ -32,7 +34,7 @@ module.exports = {
           ? res
               .status(404)
               .json({ message: "Thought created, but no user with this ID" })
-          : res.json({ message: "thought created" })
+          : res.status(200).json({ message: "Thought successfully created" })
       )
       .catch((err) => {
         console.error(err);
@@ -44,14 +46,15 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID" })
-          : Reactions.deleteMany({ _id: { $in: reactionSchema.reactionId } })
+          : reactionSchema.deleteMany({ _id: { $in: reactionSchema.reactionId } })
       )
       .then(() =>
         res.json({ message: "Thought and associated reactions deleted!" })
       )
-      .catch((err) => res.status(500).json(err))
-      console.log(err);
-      
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 
   updateThought(req, res) {
@@ -68,4 +71,3 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 };
-
