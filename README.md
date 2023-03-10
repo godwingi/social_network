@@ -6,18 +6,26 @@ The purpose of this server side application is to populate information in regard
 
 ## Installation
 
-Once you have downloaded the source code, please make sure you "npm install" the necessary packages before running the server. Also, you will need to set the environment variables as well, in order to access mysql.
+Once you have downloaded the source code, please make sure you "npm install" the necessary packages before running the server. 
 
 ## Usage
+Using a server side application tester, such as Insomnia, you can test to see if the routes work as expected.
+In order to access the USER routes, you will need to use the following commands:
 
-First, you will need to go into mysql and connect to the database.
-Then, you will need to run the seeds, and then connect to the server. 
+```
+localhost:3001/api/user
+```
 
-** At the moment, the most you can do is run the server, but you will be unable to see anything. **
+In order to access the THOUGHT routes, you will need to use the following commands:
 
-When this app is completed, users will be able to create a new account or login. 
+```
+localhost:3001/api/thoughts
+```
 
-They will be able to then create a new post, and/or comment on an existing post. 
+In order to access the REACTIONS, you will be required to have thought IDs.
+And in order to access the FRIEND routes, you will need a USER ID to target a user, and another USER ID who will be the friend of the target user.
+
+** NOTE: In order to test this application, the SEEDS do not work. They are left in the code in order to help you insert the information on your own, so that you can make the application work.
 
 ## License
 MIT
